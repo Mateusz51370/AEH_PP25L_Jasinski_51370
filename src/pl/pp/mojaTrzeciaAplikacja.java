@@ -97,7 +97,7 @@ public class mojaTrzeciaAplikacja {
                     System.out.println("Stopnie Celcjusza: " + celcju);
                     System.out.println("Stopnie Kelwina: " + kelwin);
                 }
-                }
+            }
             if(faren < -459){
                 System.out.println("Zła temperatura");
             }
