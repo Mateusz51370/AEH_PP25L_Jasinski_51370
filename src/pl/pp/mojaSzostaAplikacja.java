@@ -1,6 +1,6 @@
 /*package pl.pp;
 
-public class mojaPiataAplikacja {
+public class mojaSzostaAplikacja {
     public static void main(String[] args) {
 
         // Obliczenia i wyświetlenie wyniku dla wartości przypisanych w kodzie aplikacji
@@ -79,30 +79,50 @@ public class mojaPiataAplikacja {
         return finalScore;
     }
 }*/
+package pl.pp;
 
 import java.util.Scanner;
 
-public class mojaPiataAplikacja {
+public class mojaSzostaAplikacja {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Podaj proszę liczbę całkowita x: ");
-        int x = scanner.nextInt();
-        System.out.println("Podaj proszę liczbę całkowitą y: ");
-        int y = scanner.nextInt();
-        scanner.nextLine();
-        System.out.println("Podaj dowolny znak:");
-        String znak = scanner.nextLine();
-        System.out.println(f1(x, y, znak));
-    }
 
-    private static String f1(int a, int b, String znak1) {
-        String result = "";
-        for (int i = 1; i <= a; i+= 1) {
-            for (int j = 1; j <= b; j+= 1){
-                result += znak1;
-            }
-            result += "\n";
+            System.out.println("Podaj Liczbe N");
+            int liczbaN = scanner.nextInt();
+
+            long czasStartuIter = System.nanoTime();
+            //metodaIter(10000000);
+            long wynikIter = metodaIter(liczbaN);
+            long czasStopIter = System.nanoTime();
+            long czasTrwaniaIter = (czasStopIter - czasStartuIter); // / 1000000;
+
+            System.out.println("Silnia metoda Iteracyjna " + wynikIter);
+            System.out.println("Czas trwania (Iteracyjnie) " + czasTrwaniaIter);
+
+            long czasStartuReku = System.nanoTime();
+            //metodaReku(10000000);
+            long wynikReku = metodaReku(liczbaN);
+            long czasStopReku = System.nanoTime();
+            long czasTrwaniaReku = (czasStopReku - czasStartuReku); // / 1000000;
+
+            System.out.println("Silnia metoda Rekurencyjna " + wynikReku);
+            System.out.println("Czas trwania (Rekurencyjnie) " + czasTrwaniaReku);
         }
-        return result;
+
+        public static long metodaIter ( long LiczbaN){
+            long wynik = 1;
+            for (int i = 1; i <= LiczbaN; i++) {
+                wynik *= i;
+            }
+            return wynik;
+        }
+
+        public static long metodaReku ( long LiczbaN) {
+            if (LiczbaN < 2) {
+                return 1;
+            }
+            else {
+                return LiczbaN * metodaReku(LiczbaN - 1);
+            }
     }
 }
