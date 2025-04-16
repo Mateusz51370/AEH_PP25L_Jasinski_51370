@@ -87,7 +87,7 @@ public class mojaSzostaAplikacja {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-            System.out.println("Podaj Liczbe N");
+            System.out.println("Podaj Liczbe N ");
             int liczbaN = scanner.nextInt();
 
             long czasStartuIter = System.nanoTime();
@@ -109,7 +109,7 @@ public class mojaSzostaAplikacja {
             System.out.println("Czas trwania (Rekurencyjnie) " + czasTrwaniaReku);
         }
 
-        public static long metodaIter ( long LiczbaN){
+        public static long metodaIter(long LiczbaN) {
             long wynik = 1;
             for (int i = 1; i <= LiczbaN; i++) {
                 wynik *= i;
@@ -117,7 +117,7 @@ public class mojaSzostaAplikacja {
             return wynik;
         }
 
-        public static long metodaReku ( long LiczbaN) {
+        public static long metodaReku(long LiczbaN) {
             if (LiczbaN < 2) {
                 return 1;
             }
