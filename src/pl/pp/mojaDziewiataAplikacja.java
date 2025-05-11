@@ -1,7 +1,7 @@
 /*package pl.pp;
 import pl.pp.Person;
 
-public class mojaOsmaAplikacja {
+public class mojaDziewiataAplikacja {
     public static void main(String[] args) {
         Person person1 = new Person("Test", "Testowy", 25); //nowy obiekt klasy Person
         person1.hiToAll(); //wywołanie metody hiToAll() z obiektu person1 klasy Person
@@ -26,19 +26,18 @@ public class mojaOsmaAplikacja {
 
 package pl.pp;
 
-public class mojaOsmaAplikacja {
+public class MojaDziewiataAplikacja {
     public static void main(String[] args) {
-        Konto konto1 = new Konto();
-        konto1.setNumerKonta("52138812765512");
-        konto1.setEmailWlasciciela("mechanik@gmail.pl");
-        konto1.setNazwaWlasciciela("Tomek Mechanik");
-        konto1.setStanKonta(1000.00);
-        konto1.setNumerWlasciciela("521341211");
+        pl.pp.Magazyn magazyn1 = new pl.pp.Magazyn();
+        magazyn1.setEmailKontaktu("kontakt@gmail.com");
+        magazyn1.setNumerKontaktu("424444234");
+        magazyn1.setPrzestrzenMagazynu(5000);
 
-        System.out.println("Konto: "+ konto1.getNazwaWlasciciela() + " ("+ konto1.getEmailWlasciciela()+ " / "+ konto1.getNumerWlasciciela()+") -> Stan konta: "+ konto1.getStanKonta() + " PLN ("+ konto1.getNumerKonta()+")");
-        konto1.wyciagKonto(900);
-        konto1.zasilKonto(250);
-        konto1.wyciagKonto(50);
-        konto1.wyciagKonto(350);
+        System.out.println("Kontakt:" + magazyn1.getEmailKontaktu() + " numer: " + magazyn1.getNumerKontaktu() + " Przestrzen magazynu: " + magazyn1.getPrzestrzenMagazynu());
+        magazyn1.DodajTowar(3000);
+        magazyn1.OdejmijTowar(1000);
+        magazyn1.DodajTowar(2500);
+        double zajetosc=5000-magazyn1.getPrzestrzenMagazynu();
+        System.out.println("Zajete: "+zajetosc);
     }
 }
