@@ -126,12 +126,10 @@ public class mojaTrzynastaAplikacja {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        // Pobranie ścieżki do pliku wejściowego
         System.out.println("Podaj ścieżkę do pliku wejściowego:");
         String inputFilePath = scanner.nextLine();
         Path inputPath = Paths.get(inputFilePath);
 
-        // Pobranie ścieżki do pliku wyjściowego
         System.out.println("Podaj ścieżkę do pliku wyjściowego:");
         String outputFilePath = scanner.nextLine();
         Path outputPath = Paths.get(outputFilePath);
@@ -143,7 +141,6 @@ public class mojaTrzynastaAplikacja {
         }
 
         try {
-            // Odczytanie zawartości pliku wejściowego
             List<String> lines = Files.readAllLines(inputPath);
             StringBuilder contentBuilder = new StringBuilder();
             for (String line : lines) {
@@ -151,25 +148,21 @@ public class mojaTrzynastaAplikacja {
             }
             String fileContent = contentBuilder.toString().trim();
 
-            // Liczenie słów
             String[] words = fileContent.split("\\s+");
             int wordCount = words.length;
             System.out.println("Liczba wszystkich słów: " + wordCount);
 
-            // Liczenie wystąpień każdego słowa
             Map<String, Integer> wordOccurrences = new HashMap<>();
             for (String word : words) {
                 word = word.toLowerCase();
                 wordOccurrences.put(word, wordOccurrences.getOrDefault(word, 0) + 1);
             }
 
-            // Wyświetlanie wystąpień słów w konsoli
             System.out.println("Wystąpienia każdego słowa:");
             for (Map.Entry<String, Integer> entry : wordOccurrences.entrySet()) {
                 System.out.println(entry.getKey() + ": " + entry.getValue());
             }
 
-            // Zapisanie wyniku do pliku wyjściowego
             StringBuilder outputContent = new StringBuilder();
             outputContent.append("Nazwa pliku: ").append(inputFilePath).append("\n");
             outputContent.append("Liczba słów: ").append(wordCount).append("\n");
