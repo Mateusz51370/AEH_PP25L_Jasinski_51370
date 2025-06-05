@@ -1,4 +1,5 @@
-package pl.pp;/*import java.io.BufferedReader;
+package pl.pp;
+/*import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
@@ -8,7 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
-public class mojaDwunastaAplikacja {
+public class mojaTrzynastaAplikacja {
     public static void main(String[] args) {
         // Bardzo przydatne - wskazuje bieżący katalog, w którym pracujemy i z którego uruchomiono kod main()
         String userDirectory = System.getProperty("user.dir");
@@ -109,51 +110,77 @@ public class mojaDwunastaAplikacja {
 }*/
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
-public class mojaDwunastaAplikacja {
+public class mojaTrzynastaAplikacja {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        String inputFilePath = "";
-        String outputFilePath = "";
-        boolean validInputFile = false;
 
-        while (!validInputFile) {
-            System.out.println("Podaj ścieżkę do pliku wejściowego:");
+        // Pobranie ścieżki do pliku wejściowego
+        System.out.println("Podaj ścieżkę do pliku wejściowego:");
+        String inputFilePath = scanner.nextLine();
+        Path inputPath = Paths.get(inputFilePath);
+
+        // Pobranie ścieżki do pliku wyjściowego
+        System.out.println("Podaj ścieżkę do pliku wyjściowego:");
+        String outputFilePath = scanner.nextLine();
+        Path outputPath = Paths.get(outputFilePath);
+
+        while (!Files.exists(inputPath)) {
+            System.out.println("Plik wejściowy nie istnieje. Podaj poprawną ścieżkę:");
             inputFilePath = scanner.nextLine();
-
-            Path pathToFile = Paths.get(inputFilePath);
-            if (Files.exists(pathToFile)) {
-                validInputFile = true;
-            } else {
-                System.out.println("Plik nie istnieje, podaj poprawną ścieżkę.");
-            }
+            inputPath = Paths.get(inputFilePath);
         }
 
-        System.out.println("Podaj ścieżkę do pliku wyjściowego:");
-        outputFilePath = scanner.nextLine();
+        try {
+            // Odczytanie zawartości pliku wejściowego
+            List<String> lines = Files.readAllLines(inputPath);
+            StringBuilder contentBuilder = new StringBuilder();
+            for (String line : lines) {
+                contentBuilder.append(line).append(" ");
+            }
+            String fileContent = contentBuilder.toString().trim();
 
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(inputFilePath))) {
-            int lineCount = 0;
-            while (bufferedReader.readLine() != null) {
-                lineCount++;
+            // Liczenie słów
+            String[] words = fileContent.split("\\s+");
+            int wordCount = words.length;
+            System.out.println("Liczba wszystkich słów: " + wordCount);
+
+            // Liczenie wystąpień każdego słowa
+            Map<String, Integer> wordOccurrences = new HashMap<>();
+            for (String word : words) {
+                word = word.toLowerCase();
+                wordOccurrences.put(word, wordOccurrences.getOrDefault(word, 0) + 1);
             }
 
-            System.out.println("Liczba linii w pliku: " + lineCount);
-
-            try (FileWriter fileWriter = new FileWriter(outputFilePath)) {
-                fileWriter.write("Nazwa pliku: " + inputFilePath + "\n");
-                fileWriter.write("Liczba linii: " + lineCount + "\n");
+            // Wyświetlanie wystąpień słów w konsoli
+            System.out.println("Wystąpienia każdego słowa:");
+            for (Map.Entry<String, Integer> entry : wordOccurrences.entrySet()) {
+                System.out.println(entry.getKey() + ": " + entry.getValue());
             }
+
+            // Zapisanie wyniku do pliku wyjściowego
+            StringBuilder outputContent = new StringBuilder();
+            outputContent.append("Nazwa pliku: ").append(inputFilePath).append("\n");
+            outputContent.append("Liczba słów: ").append(wordCount).append("\n");
+            outputContent.append("Wystąpienia każdego słowa:\n");
+            for (Map.Entry<String, Integer> entry : wordOccurrences.entrySet()) {
+                outputContent.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
+            }
+            Files.write(outputPath, outputContent.toString().getBytes(Charset.defaultCharset()));
 
         } catch (IOException e) {
-            System.out.println("Wystąpił błąd podczas przetwarzania pliku: " + e.getMessage());
+            System.out.println("Dostaliśmy błąd obsługi pliku: " + e.getMessage());
             e.printStackTrace();
         }
     }
